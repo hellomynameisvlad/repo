@@ -1,3 +1,34 @@
 {
-  "message": "This is a test response from GitHub Pages"
+  "statusCode": 200,
+  "data": [
+    {
+      "orderNumber": "987654321",
+      "email": "indy@adventures-r-us.com",
+      "customer": {
+        "firstName": "Indiana",
+        "lastName": "Jones",
+        "phone": "+44 20 1234 5678"
+      },
+      "billingAddress": {
+        "street": "42 High Street",
+        "city": "London",
+        "postalCode": "W1A 1AA",
+        "country": "United Kingdom"
+      },
+      "shippingAddress": {
+        "street": "28 Park Avenue",
+        "city": "Aberdeen",
+        "postalCode": "AB2 1AB",
+        "country": "United Kingdom"
+      },
+      "orderDate": "2023-10-12T15:30:00Z",
+      "items": [
+        {
+          "product": "Fedora Hat",
+          "quantity": 1,
+          "unitPrice": 28.99
+        }
+      ]
+    }
+  ]
 }
