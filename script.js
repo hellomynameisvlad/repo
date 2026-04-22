@@ -35,3 +35,8 @@ function applyLang(lang) {
 }
 
 applyLang(detectLangFromPath());
+
+const script = document.createElement("script");
+script.id = "ze-snippet";
+script.src = "https://static.zdassets.com/ekr/snippet.js?key=9f2468a9-8171-49d2-b455-522be1138493";
+document.body.appendChild(script);
