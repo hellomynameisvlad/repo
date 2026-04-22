@@ -37,7 +37,7 @@ applyLang(pageLang);
 
 const script = document.createElement("script");
 script.id = "ze-snippet";
-script.src = "https://static.zdassets.com/ekr/snippet.js?key=9f2468a9-8171-49d2-b455-522be1138493";
+script.src = "https://static.zdassets.com/ekr/snippet.js?key=a9cfbcdd-7e09-4055-90a5-a764b41ed1d0";
 
 script.onload = function () {
   if (window.zE) {
