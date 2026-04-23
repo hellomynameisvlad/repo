@@ -27,7 +27,7 @@ window.zESettings = {
 (function () {
   const s = document.createElement("script");
   s.id = "ze-snippet";
-  s.src = "https://static.zdassets.com/ekr/snippet.js?key=8606effb-1605-4270-b14f-6dfc98da5003";
+  s.src = "https://static.zdassets.com/ekr/snippet.js?key=a9cae50f-cf32-493d-9478-656245c0e674";
   s.async = true;
 
   s.onload = function () {
