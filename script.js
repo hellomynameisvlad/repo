@@ -1,13 +1,15 @@
 function detectLangFromPath() {
   const path = window.location.pathname.toLowerCase();
 
-  if (path.includes("/sv/")) return "sv";
-  if (path.includes("/no/")) return "nb"; // use nb for Norwegian Bokmål
-  if (path.includes("/en/")) return "en";
-  return "en";
+  if (path.includes("/sv/")) return "sv-SE";
+  if (path.includes("/no/")) return "nb-NO";
+  if (path.includes("/en/")) return "en-US";
+  return "en-US";
 }
 
-function applyLang(lang) {
+function applyLang(locale) {
+  const lang = locale.split("-")[0];
+
   const translations = {
     en: {
       title: "Welcome",
@@ -27,22 +29,52 @@ function applyLang(lang) {
   };
 
   const t = translations[lang] || translations.en;
-  document.getElementById("title").innerText = t.title;
-  document.getElementById("description").innerText = t.description;
-  document.getElementById("cta").innerText = t.cta;
+
+  const titleEl = document.getElementById("title");
+  const descEl = document.getElementById("description");
+  const ctaEl = document.getElementById("cta");
+
+  if (titleEl) titleEl.innerText = t.title;
+  if (descEl) descEl.innerText = t.description;
+  if (ctaEl) ctaEl.innerText = t.cta;
+
+  document.documentElement.lang = lang;
 }
 
-const pageLang = detectLangFromPath();
-applyLang(pageLang);
+const pageLocale = detectLangFromPath();
+applyLang(pageLocale);
 
 const script = document.createElement("script");
 script.id = "ze-snippet";
 script.src = "https://static.zdassets.com/ekr/snippet.js?key=a9cae50f-cf32-493d-9478-656245c0e674";
+script.async = true;
 
 script.onload = function () {
-  if (window.zE) {
-    zE("messenger:set", "locale", pageLang);
-  }
+  let tries = 0;
+  const maxTries = 40;
+
+  const timer = setInterval(() => {
+    tries++;
+
+    if (window.zE) {
+      clearInterval(timer);
+
+      zE("messenger:set", "locale", pageLocale);
+
+      zE("messenger:set", "conversationFields", [
+        { id: "page_locale", value: pageLocale },
+        { id: "page_url", value: window.location.href }
+      ]);
+
+      console.log("Zendesk locale set to:", pageLocale);
+      console.log("Zendesk page URL set to:", window.location.href);
+    }
+
+    if (tries >= maxTries) {
+      clearInterval(timer);
+      console.warn("Zendesk did not become ready in time");
+    }
+  }, 250);
 };
 
-document.body.appendChild(script);
+document.head.appendChild(script);
