@@ -4,13 +4,11 @@ function detectLangFromPath() {
   if (path.includes("/sv/")) return "sv-SE";
   if (path.includes("/no/")) return "nb-NO";
   if (path.includes("/en/")) return "en-US";
-
   return "en-US";
 }
 
 const pageLocale = detectLangFromPath();
 
-// MUST be set before loading Zendesk
 window.zESettings = {
   webWidget: {
     locale: pageLocale
@@ -25,7 +23,6 @@ window.zESettings = {
   }
 };
 
-// load Zendesk snippet AFTER settings
 (function () {
   const s = document.createElement("script");
   s.id = "ze-snippet";
