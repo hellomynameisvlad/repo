@@ -1,10 +1,31 @@
-function detectLangFromPath() {
+function detectLocalesFromPath() {
   const path = window.location.pathname.toLowerCase();
 
-  if (path.includes("/sv/")) return "sv-SE";
-  if (path.includes("/no/")) return "nb-NO";
-  if (path.includes("/en/")) return "en-US";
-  return "en-US";
+  if (path.includes("/sv/")) {
+    return {
+      pageLocale: "sv-SE",
+      widgetLocale: "sv"
+    };
+  }
+
+  if (path.includes("/no/")) {
+    return {
+      pageLocale: "nb-NO",
+      widgetLocale: "no"
+    };
+  }
+
+  if (path.includes("/en/")) {
+    return {
+      pageLocale: "en-US",
+      widgetLocale: "en-US"
+    };
+  }
+
+  return {
+    pageLocale: "en-US",
+    widgetLocale: "en-US"
+  };
 }
 
 function applyLang(locale) {
@@ -41,12 +62,12 @@ function applyLang(locale) {
   document.documentElement.lang = lang;
 }
 
-const pageLocale = detectLangFromPath();
+const { pageLocale, widgetLocale } = detectLocalesFromPath();
 applyLang(pageLocale);
 
 window.zESettings = {
   webWidget: {
-    locale: pageLocale
+    locale: widgetLocale
   }
 };
 
@@ -76,14 +97,16 @@ window.zESettings = {
           { id: "26983370877724", value: pageLocale }
         ]);
 
-        zE("messenger:set", "locale", pageLocale);
+        zE("messenger:set", "locale", widgetLocale);
 
         console.log("conversation_locale sent:", pageLocale);
+        console.log("widget locale set:", widgetLocale);
+
         clearInterval(timer);
       } catch (e) {
         if (tries >= maxTries) {
           clearInterval(timer);
-          console.error("Failed to set conversation fields:", e);
+          console.error("Failed to set conversation fields or locale:", e);
         }
       }
     }, 200);
