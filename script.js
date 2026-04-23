@@ -4,6 +4,7 @@ function detectLangFromPath() {
   if (path.includes("/sv/")) return "sv-SE";
   if (path.includes("/no/")) return "nb-NO";
   if (path.includes("/en/")) return "en-US";
+
   return "en-US";
 }
 
@@ -62,12 +63,10 @@ script.onload = function () {
       zE("messenger:set", "locale", pageLocale);
 
       zE("messenger:set", "conversationFields", [
-        { id: "page_locale", value: pageLocale },
-        { id: "page_url", value: window.location.href }
+        { id: "26983370877724", value: pageLocale }
       ]);
 
       console.log("Zendesk locale set to:", pageLocale);
-      console.log("Zendesk page URL set to:", window.location.href);
     }
 
     if (tries >= maxTries) {
